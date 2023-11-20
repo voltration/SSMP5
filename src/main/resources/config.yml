@@ -1,0 +1,6 @@
+helpCommand: |
+  &e&lSSMP5 &7DEVBUILD &8@sanderson
+  &e/bank [player?]
+  &e/pay [player] [amount]
+  &e/withdraw [amount/max]
+  &e/deposit [amount/max]

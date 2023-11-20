@@ -1,0 +1,4 @@
+name: SSMP5
+version: '${project.version}'
+main: lol.ssmp.ssmp5.Main
+api-version: '1.20'
