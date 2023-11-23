@@ -39,7 +39,7 @@ public class BalanceManager {
 
         String uuid = String.valueOf(p.getUniqueId());
 
-        // TODO: send message
+        // TODO: send message!
         if (newBalance < 0) {
             return;
         }
