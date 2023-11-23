@@ -6,6 +6,5 @@ This is a minecraft plugin. It currently contains its own custom:
 - Chatting system
 - Database system
 
-It has no dependencies other than the Spigot API and SQLLite.
-
+It has no dependencies other than the Spigot API.
 ## License
