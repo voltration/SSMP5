@@ -37,7 +37,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: SSMP5 ${{ steps.version.outputs.version }}
-          tag_name: ${{ github.ref }}
+          tag_name: SSMP5
           body_path: README.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
