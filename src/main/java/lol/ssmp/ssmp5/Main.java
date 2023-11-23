@@ -6,9 +6,6 @@ import lol.ssmp.ssmp5.commands.Pay;
 import lol.ssmp.ssmp5.events.ChatEvent;
 import lol.ssmp.ssmp5.events.JoinEvent;
 import lol.ssmp.ssmp5.events.QuitEvent;
-import net.milkbowl.vault.permission.Permission;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;

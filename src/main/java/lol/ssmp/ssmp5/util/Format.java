@@ -1,6 +1,5 @@
 package lol.ssmp.ssmp5.util;
 
-import lol.ssmp.ssmp5.Main;
 import org.bukkit.ChatColor;
 
 public class Format {

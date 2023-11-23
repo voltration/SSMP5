@@ -6,7 +6,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import static lol.ssmp.ssmp5.Main.db;
 import static lol.ssmp.ssmp5.util.Format.f;
