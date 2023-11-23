@@ -10,15 +10,18 @@ import static lol.ssmp.ssmp5.Main.db;
 
 public class BalanceManager {
 
-    public static int getBalance(String p) {
+
+    public static int getBalance(Player p) {
 
         int balance = 0;
+
+        String uuid = String.valueOf(p.getUniqueId());
 
         try {
 
             String query = "SELECT balance FROM users WHERE uuid = ?;";
             PreparedStatement preparedStatement = db.prepareStatement(query);
-            preparedStatement.setString(1, p);
+            preparedStatement.setString(1, uuid);
             ResultSet resultSet = preparedStatement.executeQuery();
             balance = resultSet.getInt("balance");
 
@@ -29,17 +32,23 @@ public class BalanceManager {
         return balance;
     }
 
-    public static void subtractBalance(String p, int amount) {
+    public static void subtractBalance(Player p, int amount) {
 
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance - amount;
+
+        String uuid = String.valueOf(p.getUniqueId());
+
+        if (newBalance < 0) {
+            return;
+        }
 
         try {
 
             String query = "UPDATE users SET balance = ? WHERE uuid = ?";
             PreparedStatement updateStatement = db.prepareStatement(query);
             updateStatement.setInt(1, newBalance);
-            updateStatement.setString(2, p);
+            updateStatement.setString(2, uuid);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -49,9 +58,10 @@ public class BalanceManager {
 
     public static void addBalance(Player p, int amount) {
 
-        String uuid = String.valueOf(p.getUniqueId());
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance + amount;
+
+        String uuid = String.valueOf(p.getUniqueId());
 
         try {
 

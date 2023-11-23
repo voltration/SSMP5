@@ -1,6 +1,20 @@
-helpCommand: |
-  &e&lSSMP5 &7DEVBUILD &8@sanderson
+noPermissionMessage: "&fNo permission."
+
+helpMessage: |
+  &e&lSSMP5 &7https://github.com/voltration
   &e/bank [player?]
   &e/pay [player] [amount]
   &e/withdraw [amount/max]
   &e/deposit [amount/max]
+
+playerSenderMessage: "&fSender needs to be a player."
+wrongRecipientMessage: "&fRecipient can't be yourself."
+noPlayerMessage: "&fCouldn't find player."
+
+# Pay messages
+payUsageMessage: "&fWrong usage. &e/pay <player> <amount>"
+paySenderMessage: "&fSent &e{amount} &fto &e{player}&f."
+payRecipientMessage: "&fReceived &e{amount} &fto &e{player}&f."
+
+# Balance messages
+balanceMessage: "&fYour total balance is &e{balance}&f."

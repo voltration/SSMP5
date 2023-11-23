@@ -29,7 +29,7 @@ public class JoinEvent implements Listener {
             preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
 
         e.setJoinMessage(f("&a+ " + displayName));

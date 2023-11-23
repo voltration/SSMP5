@@ -1,42 +1,73 @@
 package lol.ssmp.ssmp5.commands;
 
-import lol.ssmp.ssmp5.managers.BalanceManager;
+import lol.ssmp.ssmp5.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Objects;
 
-import static lol.ssmp.ssmp5.Main.db;
-import static lol.ssmp.ssmp5.managers.BalanceManager.*;
+import static lol.ssmp.ssmp5.managers.BalanceManager.addBalance;
+import static lol.ssmp.ssmp5.managers.BalanceManager.subtractBalance;
+import static lol.ssmp.ssmp5.util.Format.fp;
 
 public class Pay implements CommandExecutor {
+
+    private final Main plugin;
+
+    public Pay(Main plugin) {
+        this.plugin = plugin;
+    }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             if (sender.hasPermission("ssmp.pay")) {
-                Player p = (Player) sender;
 
                 if (args.length >= 1) {
-                    try {
-                        int amount = Integer.parseInt(args[1]);
-                        subtractBalance(p, amount);
-                        addBalance((args[0]);
-                        sender.sendMessage("Paid " + amount + " from your balance. New balance: " + getBalance(p));
-                    } catch (NumberFormatException e) {
-                        sender.sendMessage("Invalid amount. Please provide a valid number.");
+
+                    Player recipient = Bukkit.getPlayer(args[0]);
+                    Player cmdSender = (Player) sender;
+
+                    int amount = Integer.parseInt(args[1]);
+
+                    if (recipient != null) {
+                        if (recipient != cmdSender) {
+                                subtractBalance(cmdSender, amount);
+                                addBalance(recipient, amount);
+
+                                sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("paySenderMessage")
+                                        .replace("{amount}", String.valueOf(amount))
+                                        .replace("{player}", recipient.getDisplayName()))));
+
+                                recipient.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payRecipientMessage")
+                                        .replace("{amount}", String.valueOf(amount))
+                                        .replace("{player}", cmdSender.getDisplayName()))));
+                        }
+                        else {
+                            // Recipient cannot be sender
+                            sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("wrongRecipientMessage"))));
+                        }
                     }
-                } else {
-                    sender.sendMessage("Usage: /pay <amount>");
+                    else {
+                        // Cannot find player
+                        sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("noPlayerMessage"))));
+                    }
                 }
-            } else {
-                sender.sendMessage("No perms");
+                else {
+                    // Wrong usage
+                    sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payUsageMessage"))));
+                }
             }
-        } else {
-            sender.sendMessage("Sender not an instance of player!");
+            else {
+                // No permission
+                sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("noPermissionMessage"))));
+            }
+        }
+        else {
+            // Not a player
+            sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("playerSenderMessage"))));
         }
         return true;
     }
