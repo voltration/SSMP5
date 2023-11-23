@@ -5,7 +5,8 @@ api-version: '1.20'
 
 commands:
   pay:
+  pm:
   help:
-    aliases: [?, ssmp]
+    aliases: [ssmp5, ssmp]
   balance:
     aliases: [bal]

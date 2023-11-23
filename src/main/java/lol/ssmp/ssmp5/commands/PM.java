@@ -9,41 +9,40 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static lol.ssmp.ssmp5.managers.BalanceManager.addBalance;
-import static lol.ssmp.ssmp5.managers.BalanceManager.subtractBalance;
+import static lol.ssmp.ssmp5.util.Format.f;
 import static lol.ssmp.ssmp5.util.Format.fp;
 
-public class Pay implements CommandExecutor {
+public class PM implements CommandExecutor {
 
     private final Main plugin;
 
-    public Pay(Main plugin) {
+    public PM(Main plugin) {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission("ssmp.pay")) {
-
+            if (sender.hasPermission("ssmp.pm")) {
                 if (args.length >= 1) {
 
-                    Player recipient = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
-
-                    int amount = Integer.parseInt(args[1]);
+                    Player recipient = Bukkit.getPlayer(args[0]);
 
                     if (recipient != null) {
-                        if (recipient != player) {
-                                subtractBalance(player, amount);
-                                addBalance(recipient, amount);
+                        if (sender != recipient) {
+                            StringBuilder argBuilder = new StringBuilder();
 
-                                sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("paySenderMessage")
-                                        .replace("{amount}", String.valueOf(amount))
-                                        .replace("{player}", recipient.getDisplayName()))));
+                            for (String arg : args) {
+                                argBuilder.append(arg).append(" ");
+                            }
 
-                                recipient.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payRecipientMessage")
-                                        .replace("{amount}", String.valueOf(amount))
-                                        .replace("{player}", player.getDisplayName()))));
+                            String msg = argBuilder.toString().trim();
+
+                            recipient.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payRecipientMessage")
+                                    .replace("{recipient}", recipient.getDisplayName())
+                                    .replace("{sender}", player.getDisplayName())
+                                    .replace("{msg}", msg))));
                         }
                         else {
                             // Recipient cannot be sender

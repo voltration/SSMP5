@@ -18,3 +18,6 @@ payRecipientMessage: "&fReceived &e{amount} &fto &e{player}&f."
 
 # Balance messages
 balanceMessage: "&fYour total balance is &e{balance}&f."
+
+# PM messages
+pmMessage: "&7[&e&lPM&7] &e{sender} &7-> &e{recipient}&8: {msg}"
