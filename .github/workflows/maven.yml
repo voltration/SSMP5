@@ -30,17 +30,17 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Create Release
+      - name: release
         uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        id: create_release
         with:
-          tag_name: SSMP5
-          release_name: SSMP5
-          body: |
-            Precompiled jar
           draft: false
           prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: upload jar artifact
         uses: actions/upload-release-asset@v1
