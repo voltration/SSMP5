@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static lol.ssmp.ssmp5.util.Format.f;
 import static lol.ssmp.ssmp5.util.Format.fp;
 
 public class PM implements CommandExecutor {

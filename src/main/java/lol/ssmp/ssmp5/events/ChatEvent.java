@@ -4,12 +4,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 
-import static lol.ssmp.ssmp5.Main.db;
+import static lol.ssmp.ssmp5.managers.GroupManager.getGroup;
 import static lol.ssmp.ssmp5.util.Format.f;
 
 public class ChatEvent implements Listener {
@@ -23,25 +20,13 @@ public class ChatEvent implements Listener {
 
         String msg = e.getMessage();
         String displayName = e.getPlayer().getDisplayName();
-        String rank = null;
+        String group = getGroup(e.getPlayer());
 
-        try {
-
-            String query = "SELECT rank FROM users WHERE uuid = ?;";
-            PreparedStatement preparedStatement = db.prepareStatement(query);
-            preparedStatement.setString(1, String.valueOf(e.getPlayer().getUniqueId()));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            rank = resultSet.getString("rank");
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        if (Objects.equals(rank, DEFAULT_RANK)) { rank = "&9"; }
-        if (Objects.equals(rank, SUPPORTER_RANK)) { rank = "&6"; }
-        if (Objects.equals(rank, ADMIN_RANK)) { rank = "&c"; }
+        if (Objects.equals(group, DEFAULT_RANK)) { group = "&9"; }
+        if (Objects.equals(group, SUPPORTER_RANK)) { group = "&6"; }
+        if (Objects.equals(group, ADMIN_RANK)) { group = "&c"; }
 
 
-        e.setFormat(f(rank + displayName + "&8: &f" + msg));
+        e.setFormat(f(group + displayName + "&8: &f" + msg));
     }
 }

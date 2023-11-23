@@ -2,34 +2,13 @@ package lol.ssmp.ssmp5.managers;
 
 import org.bukkit.entity.Player;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static lol.ssmp.ssmp5.Main.db;
+import static lol.ssmp.ssmp5.managers.DatabaseManager.getField;
+import static lol.ssmp.ssmp5.managers.DatabaseManager.setField;
 
 public class BalanceManager {
 
-
-    public static int getBalance(Player p) {
-
-        int balance = 0;
-
-        String uuid = String.valueOf(p.getUniqueId());
-
-        try {
-
-            String query = "SELECT balance FROM users WHERE uuid = ?;";
-            PreparedStatement preparedStatement = db.prepareStatement(query);
-            preparedStatement.setString(1, uuid);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            balance = resultSet.getInt("balance");
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return balance;
+    public static Integer getBalance(Player p) {
+        return (Integer) getField(p, Integer.class, "balance");
     }
 
     public static void subtractBalance(Player p, int amount) {
@@ -37,22 +16,8 @@ public class BalanceManager {
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance - amount;
 
-        String uuid = String.valueOf(p.getUniqueId());
-
-        // TODO: send message!
-        if (newBalance < 0) {
-            return;
-        }
-
-        try {
-
-            String query = "UPDATE users SET balance = ? WHERE uuid = ?";
-            PreparedStatement updateStatement = db.prepareStatement(query);
-            updateStatement.setInt(1, newBalance);
-            updateStatement.setString(2, uuid);
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+        if (newBalance > 0) {
+            setField(p, "balance", Integer.class, newBalance);
         }
 
     }
@@ -62,18 +27,8 @@ public class BalanceManager {
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance + amount;
 
-        String uuid = String.valueOf(p.getUniqueId());
+        setField(p, "balance", Integer.class, newBalance);
 
-        try {
-
-            String query = "UPDATE users SET balance = ? WHERE uuid = ?";
-            PreparedStatement updateStatement = db.prepareStatement(query);
-            updateStatement.setInt(1, newBalance);
-            updateStatement.setString(2, uuid);
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
 
     }
 }

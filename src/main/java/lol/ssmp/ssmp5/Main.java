@@ -1,8 +1,8 @@
 package lol.ssmp.ssmp5;
 
 import lol.ssmp.ssmp5.commands.Balance;
-import lol.ssmp.ssmp5.commands.PM;
 import lol.ssmp.ssmp5.commands.Help;
+import lol.ssmp.ssmp5.commands.PM;
 import lol.ssmp.ssmp5.commands.Pay;
 import lol.ssmp.ssmp5.events.ChatEvent;
 import lol.ssmp.ssmp5.events.JoinEvent;
@@ -41,10 +41,9 @@ public final class Main extends JavaPlugin {
         getCommand("balance").setExecutor(new Balance(this));
         getCommand("help").setExecutor(new Help(this));
         getCommand("pm").setExecutor(new PM(this));
+
         try {
             db = DriverManager.getConnection("jdbc:sqlite:plugins/SSMP5/ssmp5.db");
-
-            System.out.println("Connected to SQLite!");
             db.createStatement().execute(query);
 
         } catch (SQLException e) {
