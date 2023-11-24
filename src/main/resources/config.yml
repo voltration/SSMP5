@@ -13,11 +13,20 @@ noPlayerMessage: "&fCouldn't find player."
 
 # Pay messages
 payUsageMessage: "&fWrong usage. &e/pay <player> <amount>"
-paySenderMessage: "&fSent &e{amount} &fto &e{player}&f."
-payRecipientMessage: "&fReceived &e{amount} &fto &e{player}&f."
+paySenderMessage: "&fSent &e${amount} &fto &e{player}&f."
+payRecipientMessage: "&fReceived &e${amount} &fto &e{player}&f."
 
 # Balance messages
-balanceMessage: "&fYour total balance is &e{balance}&f."
+balanceMessage: "&fYour total balance is &e${balance}&f."
 
 # PM messages
 pmMessage: "&7[&e&lPM&7] &e{sender} &7-> &e{recipient}&8: {msg}"
+
+#Confirmation GUI
+confirmationTitle: "&eTransaction"
+
+confirmTitleMessage: "&a&lCONFIRM"
+confirmSubtitleMessage: "&fThis will confirm the transaction."
+
+denyTitleMessage: "&c&lDENY"
+denySubtitleMessage: "&fThis will deny the transaction."

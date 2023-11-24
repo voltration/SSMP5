@@ -1,6 +1,7 @@
 package lol.ssmp.ssmp5.commands;
 
 import lol.ssmp.ssmp5.Main;
+import lol.ssmp.ssmp5.functions.ConfirmationGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,9 +17,11 @@ import static lol.ssmp.ssmp5.util.Format.fp;
 public class Pay implements CommandExecutor {
 
     private final Main plugin;
+    private final ConfirmationGUI confirmationGUI;
 
     public Pay(Main plugin) {
         this.plugin = plugin;
+        this.confirmationGUI = new ConfirmationGUI(plugin);
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -34,16 +37,17 @@ public class Pay implements CommandExecutor {
 
                     if (recipient != null) {
                         if (recipient != player) {
-                                subtractBalance(player, amount);
-                                addBalance(recipient, amount);
 
-                                sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("paySenderMessage")
-                                        .replace("{amount}", String.valueOf(amount))
-                                        .replace("{player}", recipient.getDisplayName()))));
+                            // transaction
+                            confirmationGUI.confimationGUI(player);
+
+                            sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("paySenderMessage")
+                                    .replace("{amount}", String.valueOf(amount))
+                                    .replace("{player}", recipient.getDisplayName()))));
 
                                 recipient.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payRecipientMessage")
-                                        .replace("{amount}", String.valueOf(amount))
-                                        .replace("{player}", player.getDisplayName()))));
+                                    .replace("{amount}", String.valueOf(amount))
+                                    .replace("{player}", player.getDisplayName()))));
                         }
                         else {
                             // Recipient cannot be sender

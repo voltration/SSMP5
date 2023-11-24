@@ -8,25 +8,17 @@ import java.util.Objects;
 
 import static lol.ssmp.ssmp5.managers.GroupManager.getGroup;
 import static lol.ssmp.ssmp5.util.Format.f;
+import static lol.ssmp.ssmp5.util.GroupAttributes.getGroupPrefix;
 
 public class ChatEvent implements Listener {
-
-    private static final String DEFAULT_RANK = "default";
-    private static final String SUPPORTER_RANK = "supporter";
-    private static final String ADMIN_RANK = "admin";
 
     @EventHandler
     public void onChatEvent(AsyncPlayerChatEvent e) {
 
         String msg = e.getMessage();
         String displayName = e.getPlayer().getDisplayName();
-        String group = getGroup(e.getPlayer());
+        String prefix = getGroupPrefix(getGroup(e.getPlayer()));
 
-        if (Objects.equals(group, DEFAULT_RANK)) { group = "&9"; }
-        if (Objects.equals(group, SUPPORTER_RANK)) { group = "&6"; }
-        if (Objects.equals(group, ADMIN_RANK)) { group = "&c"; }
-
-
-        e.setFormat(f(group + displayName + "&8: &f" + msg));
+        e.setFormat(f(prefix + displayName + "&8: &f" + msg));
     }
 }

@@ -19,7 +19,6 @@ public class BalanceManager {
         if (newBalance > 0) {
             setField(p, "balance", Integer.class, newBalance);
         }
-
     }
 
     public static void addBalance(Player p, int amount) {

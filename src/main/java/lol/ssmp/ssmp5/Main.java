@@ -7,6 +7,7 @@ import lol.ssmp.ssmp5.commands.Pay;
 import lol.ssmp.ssmp5.events.ChatEvent;
 import lol.ssmp.ssmp5.events.JoinEvent;
 import lol.ssmp.ssmp5.events.QuitEvent;
+import lol.ssmp.ssmp5.functions.ConfirmationGUI;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -36,6 +37,8 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatEvent(), this);
         getServer().getPluginManager().registerEvents(new QuitEvent(), this);
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+
+        getServer().getPluginManager().registerEvents(new ConfirmationGUI(this), this);
 
         getCommand("pay").setExecutor(new Pay(this));
         getCommand("balance").setExecutor(new Balance(this));

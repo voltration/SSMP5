@@ -18,13 +18,11 @@ public class JoinEvent implements Listener {
         String displayName = e.getPlayer().getDisplayName();
         String uuid = e.getPlayer().getUniqueId().toString();
 
-        // Use a prepared statement to safely insert the UUID
         String query = "INSERT OR IGNORE INTO users(uuid) VALUES (?);";
 
         try (PreparedStatement preparedStatement = db.prepareStatement(query)) {
             preparedStatement.setString(1, uuid);
 
-            // execute the prepared statement
             preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
