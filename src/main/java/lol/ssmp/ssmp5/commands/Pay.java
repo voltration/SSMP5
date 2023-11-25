@@ -1,7 +1,6 @@
 package lol.ssmp.ssmp5.commands;
 
 import lol.ssmp.ssmp5.Main;
-import lol.ssmp.ssmp5.functions.ConfirmationGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,11 +16,9 @@ import static lol.ssmp.ssmp5.util.Format.fp;
 public class Pay implements CommandExecutor {
 
     private final Main plugin;
-    private final ConfirmationGUI confirmationGUI;
 
     public Pay(Main plugin) {
         this.plugin = plugin;
-        this.confirmationGUI = new ConfirmationGUI(plugin);
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -31,15 +28,16 @@ public class Pay implements CommandExecutor {
                 if (args.length >= 1) {
 
                     Player recipient = Bukkit.getPlayer(args[0]);
-                    Player player = (Player) sender;
+                    Player p = (Player) sender;
 
                     int amount = Integer.parseInt(args[1]);
 
                     if (recipient != null) {
-                        if (recipient != player) {
+                        if (recipient != p) {
 
                             // transaction
-                            confirmationGUI.confimationGUI(player);
+                            subtractBalance(p, amount);
+                            addBalance(recipient, amount);
 
                             sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("paySenderMessage")
                                     .replace("{amount}", String.valueOf(amount))
@@ -47,7 +45,7 @@ public class Pay implements CommandExecutor {
 
                                 recipient.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("payRecipientMessage")
                                     .replace("{amount}", String.valueOf(amount))
-                                    .replace("{player}", player.getDisplayName()))));
+                                    .replace("{player}", p.getDisplayName()))));
                         }
                         else {
                             // Recipient cannot be sender
