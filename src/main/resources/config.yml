@@ -4,8 +4,8 @@ helpMessage: |
   &e&lSSMP5 &7https://github.com/voltration
   &e/bank [player?]
   &e/pay [player] [amount]
-  &e/withdraw [amount/max]
-  &e/deposit [amount/max]
+  &e/withdraw [amount]
+  &e/deposit
 
 playerSenderMessage: "&fSender needs to be a player."
 wrongRecipientMessage: "&fRecipient can't be yourself."
@@ -22,11 +22,24 @@ balanceMessage: "&fYour total balance is &e${balance}&f."
 # PM messages
 pmMessage: "&7[&e&lPM&7] &e{sender} &7-> &e{recipient}&8: {msg}"
 
-#Confirmation GUI
-confirmationTitle: "&eTransaction"
-
-confirmTitleMessage: "&a&lCONFIRM"
-confirmSubtitleMessage: "&fThis will confirm the transaction."
-
 denyTitleMessage: "&c&lDENY"
 denySubtitleMessage: "&fThis will deny the transaction."
+
+#Death messages
+deathMessage: "&fYou died at &e{x}&f, &e{y}&f, &e{z}&f."
+deathMessageTimer: "&fYou have &e15 &fminutes to retrieve your items before they despawn."
+#Deposit GUI
+depositTitle: "&e&lDEPOSIT"
+depositMessage: "&fDeposited &e${amount} &finto your account."
+
+#Chat Messages
+defaultBrackets: "&7[&r{group}&7]"
+supporterBrackets: "&6[&r{group}&6]"
+adminBrackets: "&c[&r{group}&c]"
+
+default: "&7"
+coal: "&8Coal"
+iron: "&fIron"
+gold: "&eGold"
+diamond: "&bDiamond"
+netherite: "&0Netherite"

@@ -17,7 +17,7 @@ public class BalanceManager {
         int newBalance =  oldBalance - amount;
 
         if (newBalance > 0) {
-            setField(p, "balance", Integer.class, newBalance);
+            setField(p, Integer.class, "balance", newBalance);
         }
     }
 
@@ -26,7 +26,7 @@ public class BalanceManager {
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance + amount;
 
-        setField(p, "balance", Integer.class, newBalance);
+        setField(p, Integer.class, "balance", newBalance);
 
 
     }

@@ -1,14 +1,13 @@
 package lol.ssmp.ssmp5.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.Objects;
-
-import static lol.ssmp.ssmp5.managers.GroupManager.getGroup;
 import static lol.ssmp.ssmp5.util.Format.f;
-import static lol.ssmp.ssmp5.util.GroupAttributes.getGroupPrefix;
+import static lol.ssmp.ssmp5.util.GroupPrefix.getPlayerGroupColor;
+import static lol.ssmp.ssmp5.util.GroupPrefix.getPlayerGroupPrefix;
 
 public class ChatEvent implements Listener {
 
@@ -16,9 +15,12 @@ public class ChatEvent implements Listener {
     public void onChatEvent(AsyncPlayerChatEvent e) {
 
         String msg = e.getMessage();
-        String displayName = e.getPlayer().getDisplayName();
-        String prefix = getGroupPrefix(getGroup(e.getPlayer()));
+        Player p = e.getPlayer();
 
-        e.setFormat(f(prefix + displayName + "&8: &f" + msg));
+        String displayName = e.getPlayer().getDisplayName();
+        String prefix = getPlayerGroupPrefix(p);
+        String rankColor = getPlayerGroupColor(p);
+
+        e.setFormat(f(prefix + " " +  rankColor + displayName + "&8: &f" + msg));
     }
 }

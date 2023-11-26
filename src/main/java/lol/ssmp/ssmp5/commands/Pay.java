@@ -71,6 +71,6 @@ public class Pay implements CommandExecutor {
             // Not a player
             sender.sendMessage(fp(Objects.requireNonNull(plugin.getConfig().getString("playerSenderMessage"))));
         }
-        return true;
+        return false;
     }
 }

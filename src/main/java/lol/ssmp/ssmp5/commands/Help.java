@@ -22,6 +22,6 @@ public class Help implements CommandExecutor {
 
         sender.sendMessage(f(Objects.requireNonNull(plugin.getConfig().getString("helpMessage"))));
 
-        return true;
+        return false;
     }
 }

@@ -10,7 +10,7 @@ import static lol.ssmp.ssmp5.Main.db;
 
 public class DatabaseManager {
 
-    public static void setField(Player p, String field, Class<?> type, Object value) {
+    public static void setField(Player p, Class<?> type, String field, Object value) {
 
         String uuid = String.valueOf(p.getUniqueId());
 

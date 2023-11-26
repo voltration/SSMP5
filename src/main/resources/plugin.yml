@@ -6,6 +6,7 @@ api-version: '1.20'
 commands:
   pay:
   pm:
+  deposit:
   help:
     aliases: [ssmp5, ssmp]
   balance:
