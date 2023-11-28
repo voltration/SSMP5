@@ -2,6 +2,7 @@ package lol.ssmp.ssmp5;
 
 import lol.ssmp.ssmp5.commands.*;
 import lol.ssmp.ssmp5.events.*;
+import lol.ssmp.ssmp5.managers.EnderchestManager;
 import lol.ssmp.ssmp5.util.GroupPrefix;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,13 +18,18 @@ public final class Main extends JavaPlugin {
 
     public static Connection db = null;
 
-    String query =
+    String usersQuery =
             "CREATE TABLE IF NOT EXISTS users(" +
-            "uuid TEXT PRIMARY KEY," +
-            "advancements INTEGER DEFAULT 0," +
-            "rank TEXT DEFAULT 'default'," +
-            "progressRank TEXT DEFAULT ''," +
-            "balance INTEGER DEFAULT 0)";
+                    "uuid TEXT PRIMARY KEY," +
+                    "advancements INTEGER DEFAULT 0," +
+                    "rank TEXT DEFAULT 'default'," +
+                    "progressRank TEXT DEFAULT ''," +
+                    "balance INTEGER DEFAULT 0)";
+
+    String enderchestQuery =
+            "CREATE TABLE IF NOT EXISTS enderchests(" +
+                    "uuid TEXT PRIMARY KEY," +
+                    "ecContents TEXT)";
 
     @Override
     public void onEnable() {
@@ -34,8 +40,9 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatEvent(), this);
         getServer().getPluginManager().registerEvents(new QuitEvent(), this);
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
-        getServer().getPluginManager().registerEvents(new AdvancementEvent(), this);
 
+        getServer().getPluginManager().registerEvents(new AdvancementEvent(), this);
+        getServer().getPluginManager().registerEvents(new EnderchestManager(this), this);
         getServer().getPluginManager().registerEvents(new DeathEvent(this), this);
         getServer().getPluginManager().registerEvents(new Deposit(this), this);
 
@@ -49,7 +56,8 @@ public final class Main extends JavaPlugin {
 
         try {
             db = DriverManager.getConnection("jdbc:sqlite:plugins/SSMP5/ssmp5.db");
-            db.createStatement().execute(query);
+            db.createStatement().execute(usersQuery);
+            db.createStatement().execute(enderchestQuery);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

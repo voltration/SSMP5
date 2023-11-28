@@ -56,4 +56,26 @@ public class DatabaseManager {
         }
         return result;
     }
+
+    public static void updateOrReplaceField(Player p, Class<?> type, String tableName, String field, Object value) {
+        String uuid = String.valueOf(p.getUniqueId());
+
+        try {
+            String query = "INSERT OR REPLACE INTO " + tableName + " (uuid, " + field + ") VALUES (?, ?)";
+            PreparedStatement updateStatement = db.prepareStatement(query);
+
+            updateStatement.setString(1, uuid);
+
+            if (type == Integer.class) {
+                updateStatement.setInt(2, (Integer) value);
+            } else if (type == String.class) {
+                updateStatement.setString(2, (String) value);
+            }
+
+            updateStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

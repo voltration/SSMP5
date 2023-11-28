@@ -43,3 +43,6 @@ iron: "&fIron"
 gold: "&eGold"
 diamond: "&bDiamond"
 netherite: "&0Netherite"
+
+#Enderchest
+enderchestName: "&dEnder Chest"
