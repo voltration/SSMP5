@@ -8,7 +8,7 @@ import static lol.ssmp.ssmp5.managers.DatabaseManager.setField;
 public class BalanceManager {
 
     public static Integer getBalance(Player p) {
-        return (Integer) getField(p, Integer.class, "balance");
+        return (Integer) getField(p, Integer.class, "users", "balance");
     }
 
     public static void subtractBalance(Player p, int amount) {
@@ -17,7 +17,7 @@ public class BalanceManager {
         int newBalance =  oldBalance - amount;
 
         if (newBalance > 0) {
-            setField(p, Integer.class, "balance", newBalance);
+            setField(p, Integer.class, "users", "balance", newBalance);
         }
     }
 
@@ -26,7 +26,7 @@ public class BalanceManager {
         int oldBalance = getBalance(p);
         int newBalance =  oldBalance + amount;
 
-        setField(p, Integer.class, "balance", newBalance);
+        setField(p, Integer.class, "users", "balance", newBalance);
 
 
     }

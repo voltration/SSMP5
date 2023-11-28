@@ -10,13 +10,13 @@ import static lol.ssmp.ssmp5.Main.db;
 
 public class DatabaseManager {
 
-    public static void setField(Player p, Class<?> type, String field, Object value) {
+    public static void setField(Player p, Class<?> type, String table, String field, Object value) {
 
         String uuid = String.valueOf(p.getUniqueId());
 
         try {
 
-            String query = "UPDATE users SET " + field + " = ? WHERE uuid = ?";
+            String query = "UPDATE " + table + " SET " + field + " = ? WHERE uuid = ?";
             PreparedStatement updateStatement = db.prepareStatement(query);
 
             if (type == Integer.class) {
@@ -32,13 +32,13 @@ public class DatabaseManager {
             System.out.println(ex.getMessage());
         }
     }
-    public static Object getField(Player p, Class<?> type, String field) {
+    public static Object getField(Player p, Class<?> type, String table, String field) {
 
         Object result = null;
         String uuid = String.valueOf(p.getUniqueId());
 
         try {
-            String query = "SELECT " + field + " FROM users WHERE uuid = ?";
+            String query = "SELECT " + field + " FROM " + table + " WHERE uuid = ?";
             PreparedStatement preparedStatement = db.prepareStatement(query);
             preparedStatement.setString(1, uuid);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,11 +57,11 @@ public class DatabaseManager {
         return result;
     }
 
-    public static void updateOrReplaceField(Player p, Class<?> type, String tableName, String field, Object value) {
+    public static void updateOrReplaceField(Player p, Class<?> type, String table, String field, Object value) {
         String uuid = String.valueOf(p.getUniqueId());
 
         try {
-            String query = "INSERT OR REPLACE INTO " + tableName + " (uuid, " + field + ") VALUES (?, ?)";
+            String query = "INSERT OR REPLACE INTO " + table + " (uuid, " + field + ") VALUES (?, ?)";
             PreparedStatement updateStatement = db.prepareStatement(query);
 
             updateStatement.setString(1, uuid);

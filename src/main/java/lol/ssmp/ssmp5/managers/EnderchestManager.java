@@ -1,25 +1,27 @@
 package lol.ssmp.ssmp5.managers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lol.ssmp.ssmp5.Main;
+import lol.ssmp.ssmp5.util.ItemStackSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.block.EnderChest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import static lol.ssmp.ssmp5.managers.DatabaseManager.getField;
+import static lol.ssmp.ssmp5.managers.DatabaseManager.updateOrReplaceField;
 import static lol.ssmp.ssmp5.managers.GroupManager.getProgressGroup;
 import static lol.ssmp.ssmp5.util.Format.f;
-import static lol.ssmp.ssmp5.util.GroupPrefix.getPlayerGroupPrefix;
 
 public class EnderchestManager implements Listener {
 
     private final Main plugin;
+
+    String guiTitle;
 
     public EnderchestManager(Main plugin) {
         this.plugin = plugin;
@@ -33,7 +35,7 @@ public class EnderchestManager implements Listener {
             Inventory gui;
             Player p = (Player) e.getPlayer();
             String progressGroup = getProgressGroup(p);
-            String guiTitle = f(plugin.getConfig().getString("enderchestName"));
+            guiTitle = f(plugin.getConfig().getString("enderchestName"));
 
             switch (progressGroup) {
                 case "coal":
@@ -56,18 +58,31 @@ public class EnderchestManager implements Listener {
                     break;
             }
 
-            p.openInventory(gui);
+            ItemStack[] contents = deserializeContents((String) getField(p, String.class, "enderchests", "ecContents"));
+            gui.setContents(contents);
 
+            p.openInventory(gui);
         }
     }
 
-    private void saveEnderChestContents(Player p, ItemStack[] contents) {
-        DatabaseManager.updateOrReplaceField(p, String.class, "enderchests", "ecContents", serializeContents(contents));
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e) {
+        if (e.getView().getTitle().equals(guiTitle)) {
+            Player p = (Player) e.getPlayer();
+            saveEnderChestContents(p, e.getInventory());
+        }
     }
 
+    private void saveEnderChestContents(Player p, Inventory enderChest) {
+        ItemStack[] contents = enderChest.getContents();
+        updateOrReplaceField(p, String.class, "enderchests", "ecContents", serializeContents(contents));
+    }
 
-    private String serializeContents(ItemStack[] contents) {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(contents);
+    private ItemStack[] serializeContents(ItemStack[] contents) {
+        return ItemStackSerializer.serializeContents(contents);
+    }
+
+    private ItemStack[] deserializeContents(String serializedContents) {
+        return ItemStackSerializer.deserializeContents(serializedContents);
     }
 }

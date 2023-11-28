@@ -14,19 +14,19 @@ public class GroupManager {
      */
 
     public static String getGroup(Player p) {
-        return (String) getField(p, String.class, "rank");
+        return (String) getField(p, String.class, "users", "rank");
     }
 
     public static void setGroup(Player p, String group) {
-        setField(p, String.class, "rank", group);
+        setField(p, String.class, "users", "rank", group);
     }
 
     public static String getProgressGroup(Player p) {
-        return (String) getField(p, String.class, "progressRank");
+        return (String) getField(p, String.class, "users", "progressRank");
     }
 
     public static void setProgressGroup(Player p, String group) {
-        setField(p, String.class, "progressRank", group);
+        setField(p, String.class, "users", "progressRank", group);
     }
 
 }
