@@ -35,10 +35,7 @@ public class GroupPrefix {
             case "admin":
                 result = yamlGetter.getString("adminBrackets").replace("{group}", replaceQuery);
                 break;
-            default:
-                result = yamlGetter.getString("default");
         }
-
         return result;
     }
 

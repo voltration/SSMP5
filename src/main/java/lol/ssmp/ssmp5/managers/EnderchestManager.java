@@ -78,11 +78,14 @@ public class EnderchestManager implements Listener {
         updateOrReplaceField(p, String.class, "enderchests", "ecContents", serializeContents(contents));
     }
 
-    private ItemStack[] serializeContents(ItemStack[] contents) {
+    private String serializeContents(ItemStack[] contents) {
         return ItemStackSerializer.serializeContents(contents);
     }
 
     private ItemStack[] deserializeContents(String serializedContents) {
+        if (serializedContents == null || serializedContents.isEmpty()) {
+            return new ItemStack[0];
+        }
         return ItemStackSerializer.deserializeContents(serializedContents);
     }
 }

@@ -18,9 +18,9 @@ public class ChatEvent implements Listener {
         Player p = e.getPlayer();
 
         String displayName = e.getPlayer().getDisplayName();
-        String prefix = getPlayerGroupPrefix(p);
-        String rankColor = getPlayerGroupColor(p);
+        String groupProgressColor = getPlayerGroupColor(p);
+        String progressGroup = getPlayerGroupPrefix(p);
 
-        e.setFormat(f(prefix + " " +  rankColor + displayName + "&8: &f" + msg));
+        e.setFormat(f(progressGroup + groupProgressColor + " " + displayName + "&8: &f" + msg));
     }
 }

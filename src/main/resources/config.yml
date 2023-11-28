@@ -16,6 +16,10 @@ payUsageMessage: "&fWrong usage. &e/pay <player> <amount>"
 paySenderMessage: "&fSent &e${amount} &fto &e{player}&f."
 payRecipientMessage: "&fReceived &e${amount} &fto &e{player}&f."
 
+# Rank messages
+groupUsageMessage: "&fWrong usage. &e/group <player> <group>"
+groupSuccessMessage: "&fSuccessfully set &e{player} &fto &e{group}&f."
+
 # Balance messages
 balanceMessage: "&fYour total balance is &e${balance}&f."
 
@@ -28,6 +32,7 @@ denySubtitleMessage: "&fThis will deny the transaction."
 #Death messages
 deathMessage: "&fYou died at &e{x}&f, &e{y}&f, &e{z}&f."
 deathMessageTimer: "&fYou have &e15 &fminutes to retrieve your items before they despawn."
+
 #Deposit GUI
 depositTitle: "&e&lDEPOSIT"
 depositMessage: "&fDeposited &e${amount} &finto your account."
@@ -37,7 +42,7 @@ defaultBrackets: "&7[&r{group}&7]"
 supporterBrackets: "&6[&r{group}&6]"
 adminBrackets: "&c[&r{group}&c]"
 
-default: "&7"
+stone: "&7Stone"
 coal: "&8Coal"
 iron: "&fIron"
 gold: "&eGold"

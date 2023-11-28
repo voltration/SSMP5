@@ -23,7 +23,7 @@ public final class Main extends JavaPlugin {
                     "uuid TEXT PRIMARY KEY," +
                     "advancements INTEGER DEFAULT 0," +
                     "rank TEXT DEFAULT 'default'," +
-                    "progressRank TEXT DEFAULT ''," +
+                    "progressRank TEXT DEFAULT 'stone'," +
                     "balance INTEGER DEFAULT 0)";
 
     String enderchestQuery =
@@ -51,6 +51,7 @@ public final class Main extends JavaPlugin {
         getCommand("help").setExecutor(new Help(this));
         getCommand("pm").setExecutor(new PM(this));
         getCommand("deposit").setExecutor(new Deposit(this));
+        getCommand("group").setExecutor(new Group(this));
 
         GroupPrefix.initialize(this);
 
